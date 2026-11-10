@@ -7,7 +7,7 @@ Accessibility is the product, not an extra. Every decision should make the app e
 ## Stack
 - Frontend: plain static HTML pages + one shared `style.css` + vanilla JavaScript (no framework, no build step).
 - Backend / database / auth: none. `server.py` is a tiny Flask app that only serves the static files for local dev. No database, no accounts, no data collection.
-- Hosting: not configured in the repo (source lives at github.com/LorenzoUrrutia/Capstone-Website-Code). Any static host works.
+- Hosting: not configured in the repo (source lives at github.com/LorenzoUrrutia/different-minds). Any static host works.
 - Key folders:
   - Root `*.html`: one file per page. Topic pages (`adhd.html`, `dyslexia.html`, `dyscalculia.html`), their subpages (`*-eval.html`, `adhd-*.html`, `dyslexia-spectrum.html`, `dyscalculia-symptoms.html`, `executive-function.html`), simulations (`simulations.html`, `sim-*.html`), and reflections (`reflection-*.html`).
   - `js/`: `site.js` (loaded on every page: injects the logo, smooth hash scrolling), `myth-fact.js` (the Myth/Fact quiz cards on the topic pages), `sim-safety.js` (warning, Esc pause menu, calmer mode shared by all simulations), `sim-*.js` (one per simulation), plus the ADHD sim's ambient audio file.
