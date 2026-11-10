@@ -170,6 +170,25 @@ test.describe('ADHD simulation details', () => {
     await expect(page.locator('#toastLayer .toast')).toHaveCount(1);
   });
 
+  test('Reset starts again from the beginning, like a fresh start', async ({ page }) => {
+    await start(page, sim);
+    const firstQuestion = await page.locator('#question-text').textContent();
+    await page.locator('#answer-buttons button').first().click();
+    await expect(page.locator('#question-text')).not.toHaveText(firstQuestion || '');
+    await page.locator('#intensitySelect').selectOption('strong');
+    await page.locator('#pauseBtn').click();
+
+    await page.locator('#resetBtn').click();
+    await expect(page.locator('#question-text')).toHaveText(firstQuestion || '');
+    await expect(page.locator('#answer-buttons button')).toHaveCount(4);
+    await expect(page.locator('#intensitySelect')).toHaveValue('mild');
+    await expect(page.locator('#pauseBtn')).toHaveText('Pause');
+    expect(await isPaused(page)).toBe(false);
+    // Distractions are running again.
+    await page.evaluate(() => eval('nextToastTime = 0'));
+    await expect(page.locator('#toastLayer .toast')).toHaveCount(1);
+  });
+
   test('pause menu does not undo a pause made with the Pause button', async ({ page }) => {
     await start(page, sim);
     await page.locator('#pauseBtn').click();

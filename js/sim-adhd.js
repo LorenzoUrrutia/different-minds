@@ -248,6 +248,8 @@ function handleReset() {
   }
   
   initState();
+  // Start again from question 1, the same way the simulation starts after Start.
+  handleStart();
 }
 
 function showCompletionMessage() {
