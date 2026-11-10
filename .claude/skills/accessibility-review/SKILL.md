@@ -39,6 +39,15 @@ Run this after any UI change. Fix problems as you go, then rerun until the revie
 - Works at 200% zoom and on a small Chromebook screen without anything breaking or overlapping.
 - Respects reduced-motion settings. Contrast meets WCAG AA.
 
-## 8. Report
+## 8. Simulations (`sim-*.html`)
+The simulations are intentionally difficult and research-based. Do **not** flag or remove the distractions, scrambled text, timers or interruptions, and don't change how the standard version looks or feels. Ask the owner first if a fix would. Review the page **after pressing Start**, not just on load. Check that every simulation:
+- Shows a short warning before it starts saying what it will do (and that sound will play, if it does). Nothing moves or plays before Start.
+- Can be paused or exited at any time, including with the keyboard: Esc opens a pause menu (Resume / Restart / Exit), focus moves into it and back out.
+- Never flashes more than 3 times per second (WCAG 2.3.1). Small position jitter is motion, not flashing; content or color swaps count as flashes.
+- Respects reduced motion: a calmer version is offered and is pre-selected when `prefers-reduced-motion: reduce` is set.
+- Has a screen-reader description of what the simulation shows (`#simDescription`).
+- Pop-ups inside the simulation (e.g. the ADHD interruption) are real dialogs: `role="dialog"`, a label, focus moves in, Esc closes.
+
+## 9. Report
 - Rerun the full test suite.
 - Summarize: what you checked, what you fixed, and anything you couldn't fix that needs a human decision.

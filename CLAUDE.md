@@ -10,7 +10,7 @@ Accessibility is the product, not an extra. Every decision should make the app e
 - Hosting: not configured in the repo (source lives at github.com/LorenzoUrrutia/Capstone-Website-Code). Any static host works.
 - Key folders:
   - Root `*.html`: one file per page. Topic pages (`adhd.html`, `dyslexia.html`, `dyscalculia.html`), their subpages (`*-eval.html`, `adhd-*.html`, `dyslexia-spectrum.html`, `dyscalculia-symptoms.html`, `executive-function.html`), simulations (`simulations.html`, `sim-*.html`), and reflections (`reflection-*.html`).
-  - `js/`: `site.js` (loaded on every page: injects the logo, smooth hash scrolling, ADHD quiz dialog), `myth-fact.js` (myth/fact cards), `sim-*.js` (one per simulation), plus the ADHD sim's ambient audio file.
+  - `js/`: `site.js` (loaded on every page: injects the logo, smooth hash scrolling), `myth-fact.js` (the Myth/Fact quiz cards on the topic pages), `sim-safety.js` (warning, Esc pause menu, calmer mode shared by all simulations), `sim-*.js` (one per simulation), plus the ADHD sim's ambient audio file.
   - `tests/`: Playwright end-to-end + axe accessibility tests.
   - The header nav is copy-pasted into every page; update all pages when changing it.
   - Brand colors live in `style.css` as `--color-adhd`, `--color-dyslexia`, `--color-dyscalculia` and are tuned to pass AA with white text. Use the variables, not hard-coded hex.
@@ -40,6 +40,18 @@ Accessibility is the product, not an extra. Every decision should make the app e
 - Math and numbers: offer a visual or step-by-step version, not just raw numbers.
 - Respect the user's settings: reduced motion, text size, and zoom up to 200% without breaking the layout.
 - Run the `accessibility-review` skill after building or changing any UI.
+
+## Simulations (`sim-*.html`) are intentionally difficult
+- The simulations are research-based. Do not change their behavior (content, reflection text, intensity levels, distraction types, timing, how they look or feel) without the owner's approval. If a fix would change the standard version, stop and ask first.
+- The difficulty is the point. Don't remove the distractions, scrambled text, timers or interruptions. Add safety *around* the simulation instead.
+- Every simulation must:
+  - show a short warning before it starts, saying what it will do (nothing moves or plays until the student presses Start);
+  - be pausable and exitable at any time, including with the keyboard (Esc opens a pause menu with Resume / Restart / Exit);
+  - never flash more than 3 times per second (seizure safety);
+  - respect reduced-motion settings by offering a calmer version (pre-selected when the device asks for reduced motion);
+  - include a screen-reader description of what the simulation shows.
+- The shared safety layer lives in `js/sim-safety.js`; tests are in `tests/simulations.spec.js`.
+- The "no flashing / no surprise pop-ups / timers" rules above apply to everything else on the site. Inside a running simulation, these five rules apply instead.
 
 ## Student data
 - Users may be minors. Collect only the data the app actually needs.
