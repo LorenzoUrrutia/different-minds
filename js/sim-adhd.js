@@ -67,7 +67,7 @@ const interruptMessages = [
 // Hardcoded questions (no randomization yet)
 const questions = [
   {
-    question: "Birk lives in an orange tractor on the coast of Chile. On Monday, Birk shovels sand in his tractor for 15 hours. That day, Birk has 2 eggs for breakfast, 4 tacos and 2 apples for lunch, and a salad for dinner. Birk works for the same amount of hours on Tuesday, but eats a different set of meals. He has cereal for breakfast, a 5 sandwiches and 3 bananas for lunch, and pasta for dinner. Birk works 15 hours each day for the rest of the week. If the food Birk eats is on Monday is the same food he eats on Wednesday and Friday, and the food Birk eats on Tuesday is the same food he eats on Thursday. From Monday through Friday, how many fruits has Birk eaten?",
+    question: "Birk lives in an orange tractor on the coast of Chile. On Monday, Birk shovels sand in his tractor for 15 hours. That day, Birk has 2 eggs for breakfast, 4 tacos and 2 apples for lunch, and a salad for dinner. Birk works for the same amount of hours on Tuesday, but eats a different set of meals. He has cereal for breakfast, 5 sandwiches and 3 bananas for lunch, and pasta for dinner. Birk works 15 hours each day for the rest of the week. If the food Birk eats on Monday is the same food he eats on Wednesday and Friday, and the food Birk eats on Tuesday is the same food he eats on Thursday. From Monday through Friday, how many fruits has Birk eaten?",
     answers: ["10", "12", "11", "9"]
   },  
   {
