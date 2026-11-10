@@ -18,7 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Jump instead of gliding when the visitor asks for reduced motion.
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
       history.replaceState(null, '', href);
       // Citations move focus to the source, so keyboard and screen-reader
       // users land on (and hear) the entry they followed.

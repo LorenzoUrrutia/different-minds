@@ -36,3 +36,31 @@ test('nav is keyboard reachable with a visible focus indicator', async ({ page }
   });
   expect(outline.style !== 'none' && outline.width > 0 || outline.shadow !== 'none').toBe(true);
 });
+
+// Same-page links (like citations) glide smoothly, but jump instantly when the
+// visitor's device asks for reduced motion.
+for (const motion of ['reduce', 'no-preference']) {
+  test(`same-page links respect prefers-reduced-motion: ${motion}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: motion });
+    await page.addInitScript(() => {
+      const original = Element.prototype.scrollIntoView;
+      // @ts-ignore
+      window.__scrollCalls = [];
+      Element.prototype.scrollIntoView = function (opts) {
+        // @ts-ignore
+        window.__scrollCalls.push(opts && typeof opts === 'object' ? opts.behavior : undefined);
+        return original.call(this, opts);
+      };
+    });
+    await page.goto('/adhd.html');
+    await page.locator('#what-is a.cite').first().click();
+    // @ts-ignore
+    const calls = await page.evaluate(() => window.__scrollCalls);
+    expect(calls).toEqual([motion === 'reduce' ? 'auto' : 'smooth']);
+    if (motion === 'reduce') {
+      // No animation: the source is already in view right after the click.
+      await expect(page.locator('#source-5')).toBeInViewport();
+    }
+    await expect(page.locator('#source-5')).toBeFocused();
+  });
+}

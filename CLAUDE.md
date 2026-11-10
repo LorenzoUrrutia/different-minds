@@ -74,3 +74,6 @@ At the start of any session where the owner hasn't scheduled these yet, remind t
 ## Visitor data
 - Visitors may be minors. Collect only the data the app actually needs.
 - Never log or expose personal info, and keep learning-disability details private by default.
+
+## Known issues for the design phase
+- On a 360px-wide phone with text size at 200%, `adhd.html` scrolls sideways by about 20px and long words (such as "underdiagnosis") are clipped inside the Myth/Fact card. 200% zoom on a laptop (640px) and normal text on a phone are fine. Found November 10, 2026; left for the design phase by the owner.
