@@ -41,7 +41,7 @@ Researched: November 10, 2026. Audience for the site: teachers, parents and clas
 | ID | Fact | Source |
 | --- | --- | --- |
 | A6 | There are 9 inattention symptoms and 9 hyperactivity-impulsivity symptoms. A diagnosis needs 6 or more in one category for children up to age 16, or 5 or more for people 17 and older. | [8] |
-| A7 | Symptoms must last at least 6 months, several must have been present before age 12, they must show up in two or more settings (such as home and school), and they must clearly interfere with daily life. | [8] |
+| A7 | Symptoms must last at least 6 months, several must have been present before age 12, they must show up in two or more settings (such as home and school), and they must clearly interfere with daily life. Symptoms must also be "inappropriate for the person's developmental level" (more than expected for their age). | [8] |
 | A8 | Clinicians collect reports from parents, teachers and the child, use rating scales, and rule out other explanations. There is no single test. | [8] |
 | A9 | The three presentations are mainly inattentive, mainly hyperactive-impulsive, and combined. | [8b] |
 
