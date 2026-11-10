@@ -1,8 +1,9 @@
 # Project guide for Claude
 
 ## What this app is
-A web app that helps students with learning disabilities (dyslexia, ADHD, dyscalculia) learn.
-Accessibility is the product, not an extra. Every decision should make the app easier for these students to use.
+An educational website that helps teachers, parents and classmates understand ADHD, dyslexia and dyscalculia through clear information and interactive simulations.
+Write for adults and teens who don't have these conditions.
+Accessibility is the product, not an extra. Every decision should make the site easier to use for every visitor, including people who have these conditions.
 
 ## Stack
 - Frontend: plain static HTML pages + one shared `style.css` + vanilla JavaScript (no framework, no build step).
@@ -31,6 +32,12 @@ Accessibility is the product, not an extra. Every decision should make the app e
 - Commit after each working step with a clear message. Never commit secrets or API keys.
 - Keep changes focused on the task. Don't refactor unrelated code without asking.
 
+## Facts and sources
+- Every factual claim on the site must come from `docs/facts.md` and show its source as a numbered citation.
+- Never add a statistic or claim from memory.
+- If a page needs a fact that isn't in `docs/facts.md`, stop and ask the owner.
+- Never use anything listed under "Claims to avoid" in `docs/facts.md`.
+
 ## Accessibility rules (always apply)
 - Everything works with a keyboard alone (Tab, Shift+Tab, Enter, Space, Esc), with a visible focus outline.
 - Everything works with a screen reader: real buttons and links, labels on every input, alt text on images, headings in order.
@@ -42,7 +49,7 @@ Accessibility is the product, not an extra. Every decision should make the app e
 - Run the `accessibility-review` skill after building or changing any UI.
 
 ## Simulations (`sim-*.html`) are intentionally difficult
-- The simulations are research-based. Do not change their behavior (content, reflection text, intensity levels, distraction types, timing, how they look or feel) without the owner's approval. If a fix would change the standard version, stop and ask first.
+- The simulations are research-based. Don't change simulation behavior (content, intensity levels, distraction types, timing, how they look or feel), reflection text, or the book passages without the owner's approval. If a fix would change the standard version, stop and ask first.
 - The difficulty is the point. Don't remove the distractions, scrambled text, timers or interruptions. Add safety *around* the simulation instead.
 - Every simulation must:
   - show a short warning before it starts, saying what it will do (nothing moves or plays until the student presses Start);
@@ -52,6 +59,17 @@ Accessibility is the product, not an extra. Every decision should make the app e
   - include a screen-reader description of what the simulation shows.
 - The shared safety layer lives in `js/sim-safety.js`; tests are in `tests/simulations.spec.js`.
 - The "no flashing / no surprise pop-ups / timers" rules above apply to everything else on the site. Inside a running simulation, these five rules apply instead.
+
+## Pending simulation work
+At the start of any session where the owner hasn't scheduled these yet, remind them about this list. The approval rule above still applies to each item.
+- Shared flow for every simulation: intro, baseline round, simulated round, results, reflection.
+- ADHD: answer checking and a score.
+- Dyslexia: a decoding mode, and honest relabeling of the moving-text mode.
+- Dyscalculia: everyday tasks, and its own reflection page.
+- Same intensity names on all three simulations: Mild / Moderate / Strong.
+- Redesigned reflections.
+- Voices section.
+- Decide about the book passages.
 
 ## Student data
 - Users may be minors. Collect only the data the app actually needs.
