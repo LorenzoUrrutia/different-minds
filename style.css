@@ -906,13 +906,16 @@ body.quiz-modal-open { overflow: hidden; }
   width: 100%;
 }
 
-.myth-fact-card { perspective: 1100px; width: min(520px, 92vw); height: 240px; display: none; }
+.myth-fact-card { perspective: 1100px; width: min(520px, 92vw); display: none; }
 .myth-fact-card.is-active { display: block; }
 
+/* Both faces share one grid cell, so the card grows to fit the taller face
+   (no clipping at 200% text size). */
 .myth-fact-card-inner {
   position: relative;
+  display: grid;
   width: 100%;
-  height: 100%;
+  min-height: 240px;
   transform-style: preserve-3d;
   transition: transform 0.65s ease;
 }
@@ -920,8 +923,8 @@ body.quiz-modal-open { overflow: hidden; }
 .myth-fact-card.is-flipped .myth-fact-card-inner { transform: rotateY(180deg); }
 
 .myth-fact-face {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  position: relative;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border-radius: 12px;

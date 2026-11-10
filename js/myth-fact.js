@@ -7,6 +7,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentIndex = 0;
 
+  // Screen-reader wiring: each answer button is described by its statement,
+  // and the Next button by the result + explanation, so moving focus there
+  // reads the feedback out.
+  cards.forEach((card, i) => {
+    const id = `${quizRoot.id || 'mythFact'}-${i}`;
+    const statement = card.querySelector('.myth-fact-statement');
+    const result = card.querySelector('.myth-fact-result');
+    const explanation = card.querySelector('.myth-fact-explanation');
+    const next = card.querySelector('.myth-fact-next');
+    if (statement) {
+      statement.id = `${id}-statement`;
+      card.querySelectorAll('.myth-fact-choice').forEach((b) => b.setAttribute('aria-describedby', statement.id));
+    }
+    if (result && explanation && next) {
+      result.id = `${id}-result`;
+      explanation.id = `${id}-explanation`;
+      next.setAttribute('aria-describedby', `${result.id} ${explanation.id}`);
+    }
+  });
+
+  // Only the face the student can see is reachable by keyboard / screen reader.
+  function syncFaces(card) {
+    const flipped = card.classList.contains('is-flipped');
+    const front = card.querySelector('.myth-fact-front');
+    const back = card.querySelector('.myth-fact-back');
+    if (front) front.inert = flipped;
+    if (back) back.inert = !flipped;
+  }
+
   function showCard(index) {
     cards.forEach((card) => {
       const button = card.querySelector('.myth-fact-next');
@@ -29,7 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    cards.forEach(syncFaces);
     currentIndex = index;
+  }
+
+  function focusFirstChoice() {
+    const first = cards[currentIndex] && cards[currentIndex].querySelector('.myth-fact-choice');
+    if (first) first.focus();
   }
 
   function resetQuiz() {
@@ -50,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         resetQuiz();
       }
+      focusFirstChoice();
       return;
     }
 
@@ -76,6 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
     activeCard.classList.add('is-flipped');
     activeCard.classList.toggle('is-correct', isCorrect);
     activeCard.classList.toggle('is-incorrect', !isCorrect);
+    syncFaces(activeCard);
+    const next = activeCard.querySelector('.myth-fact-next');
+    if (next) next.focus();
 
     if (!isCorrect) {
       activeCard.classList.add('is-shaking');
