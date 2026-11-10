@@ -438,7 +438,7 @@ function getRandomBrightColor() {
     '#6BCB77',
     '#F15BB5',
     '#F7B801',
-    '#9B5DE5',
+    '#AA76E9', // was #9B5DE5; lightened just enough for 4.5:1 with the dark text
     '#00BBF9'
   ];
   return colors[Math.floor(Math.random() * colors.length)];

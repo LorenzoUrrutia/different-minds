@@ -250,6 +250,23 @@ test.describe('ADHD simulation details', () => {
     expect(await toast.evaluate((t) => getComputedStyle(t).animationName)).toBe('none');
     expect(await page.evaluate(() => getComputedStyle(document.body).animationName)).toBe('none');
   });
+
+  test('every notification color has readable text contrast', async ({ page }) => {
+    await start(page, sim);
+    const count = await page.evaluate(() => eval('getRandomBrightColor').toString().match(/'#[0-9A-Fa-f]{6}'/g).length);
+    expect(count).toBe(8);
+    for (let i = 0; i < count; i++) {
+      // Pick color i, then check the settled toast.
+      await page.evaluate((i) => {
+        eval('clearAllToasts()');
+        const real = Math.random;
+        Math.random = () => (i + 0.5) / 8;
+        eval('spawnToast()');
+        Math.random = real;
+      }, i);
+      await expectNoAxeViolations(page);
+    }
+  });
 });
 
 test.describe('Dyslexia simulation details', () => {
