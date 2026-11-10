@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       history.replaceState(null, '', href);
+      // Citations move focus to the source, so keyboard and screen-reader
+      // users land on (and hear) the entry they followed.
+      if (a.classList.contains('cite')) {
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      }
     }
   });
 });

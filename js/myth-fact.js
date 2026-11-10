@@ -27,6 +27,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Writes the explanation, turning citations like "[11b]" into links to the
+  // matching entry in the page's Sources section (#source-11b).
+  function renderWithCitations(element, text) {
+    element.textContent = '';
+    text.split(/(\[\d+[a-z]?\])/).forEach((part) => {
+      const match = part.match(/^\[(\d+[a-z]?)\]$/);
+      if (!match) {
+        if (part) element.append(part);
+        return;
+      }
+      const link = document.createElement('a');
+      link.className = 'cite';
+      link.href = `#source-${match[1]}`;
+      link.textContent = part;
+      link.setAttribute('aria-label', `Source ${match[1]}`);
+      element.append(link);
+    });
+  }
+
+  // The words for an answer come from its button ("Myth", "Fact", "It's complicated").
+  function choiceLabel(card, choice) {
+    const button = Array.from(card.querySelectorAll('.myth-fact-choice'))
+      .find((b) => (b.dataset.choice || '').toLowerCase() === choice);
+    return button ? button.textContent.trim() : choice;
+  }
+
   // Only the face the student can see is reachable by keyboard / screen reader.
   function syncFaces(card) {
     const flipped = card.classList.contains('is-flipped');
@@ -100,13 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const isCorrect = selectedChoice === correctChoice;
 
     if (resultElement) {
+      const correctLabel = choiceLabel(activeCard, correctChoice);
       resultElement.textContent = isCorrect
-        ? `✓ Correct: ${correctChoice === 'myth' ? 'Myth' : 'Fact'}.`
-        : `Incorrect. Correct answer: ${correctChoice === 'myth' ? 'Myth' : 'Fact'}.`;
+        ? `✓ Correct: ${correctLabel}.`
+        : `Incorrect. Correct answer: ${correctLabel}.`;
     }
 
     if (explanationElement) {
-      explanationElement.textContent = explanation;
+      renderWithCitations(explanationElement, explanation);
     }
 
     activeCard.classList.add('is-flipped');
