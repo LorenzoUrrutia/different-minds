@@ -1,0 +1,13 @@
+{
+  "name": "capstone-website",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "serve": "http-server -p 8000 -c-1 ."
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.0",
+    "http-server": "^14.1.1"
+  }
+}

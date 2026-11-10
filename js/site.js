@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (container.querySelector('.site-logo')) return;
     const logo = document.createElement('div');
     logo.className = 'site-logo';
-    logo.setAttribute('aria-label', 'Different Minds');
-    logo.innerHTML = '<span class="site-logo-badge" aria-hidden="true"><span>Different</span><span>Minds</span></span>';
+    logo.innerHTML = '<span class="site-logo-badge"><span>Different</span><span>Minds</span></span>';
     container.prepend(logo);
   });
 

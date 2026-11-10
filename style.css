@@ -21,9 +21,9 @@
   --spacing-section: 1.5rem;
   --spacing-card: 2rem;
   --spacing-content: 2.5rem;
-  --color-adhd: #0ea5a0;
+  --color-adhd: #087571;
   --color-dyslexia: #7c3aed;
-  --color-dyscalculia: #e07b10;
+  --color-dyscalculia: #9a5207;
 }
 
 /* =============================================
@@ -361,6 +361,7 @@ header.topbar {
 .subpage-card { overflow: visible; padding-top: 0; }
 
 .adhd-card-header h2,
+.subpage-card-header h1,
 .subpage-card-header h2 { margin: 0; color: #ffffff !important; font-size: 18px; font-weight: 600; }
 
 .adhd-card-header,
@@ -405,6 +406,7 @@ body.main-dyscalculia-page .adhd-card-header { background-color: var(--color-dys
   box-shadow: none;
 }
 
+.eval-card-header h1,
 .eval-card-header h2 { margin: 0; color: #ffffff; font-size: 18px; font-weight: 600; }
 .eval-card-header, .eval-card-header * { color: #ffffff !important; }
 
@@ -525,7 +527,7 @@ body.main-dyscalculia-page .adhd-card-header { background-color: var(--color-dys
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.6);
   margin: 0;
 }
 
@@ -616,7 +618,7 @@ body.main-dyscalculia-page .adhd-card-header { background-color: var(--color-dys
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.92);
   margin: 0;
 }
 
@@ -632,7 +634,7 @@ body.main-dyscalculia-page .adhd-card-header { background-color: var(--color-dys
 
 .page-hero-sub {
   font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.92);
   max-width: 55ch;
   line-height: 1.7;
   margin: 0;
@@ -733,7 +735,7 @@ body.main-dyscalculia-page .adhd-card-header { background-color: var(--color-dys
 .topic-card-cta {
   font-size: 0.82rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.92);
   letter-spacing: 0.02em;
 }
 
@@ -1331,7 +1333,7 @@ body.quiz-modal-open { overflow: hidden; }
   line-height: 1.75;
 }
 
-.sim-reflection h3 { margin: 0 0 12px; font-size: 1.25rem; }
+.sim-reflection :is(h1, h2, h3) { margin: 0 0 12px; font-size: 1.25rem; text-align: left; letter-spacing: normal; }
 .sim-reflection .sim-reflection-body { font-size: 1.12rem; color: var(--text-secondary); max-width: 100%; }
 
 /* Smaller reflection for ADHD and dyslexia sims */
@@ -1346,8 +1348,8 @@ body.quiz-modal-open { overflow: hidden; }
   box-shadow: 0 8px 22px rgba(15, 25, 40, 0.12);
 }
 
-.sim-adhd-page .sim-reflection h3,
-.sim-dyslexia-page .sim-reflection h3 { margin: 0 0 10px; font-size: 1.2rem; }
+.sim-adhd-page .sim-reflection :is(h2, h3),
+.sim-dyslexia-page .sim-reflection :is(h2, h3) { margin: 0 0 10px; font-size: 1.2rem; }
 
 .sim-adhd-page .sim-reflection p,
 .sim-dyslexia-page .sim-reflection p { margin: 0 0 10px; font-size: 0.98rem; line-height: 1.5; color: #2a3a48; }
@@ -1792,7 +1794,7 @@ body.quiz-modal-open { overflow: hidden; }
 
 @media (max-width: 960px) {
   .sim-reflection { width: calc(100vw - 36px); padding: 22px; }
-  .sim-reflection h3 { font-size: 1.12rem; }
+  .sim-reflection :is(h1, h2, h3) { font-size: 1.12rem; }
   .sim-reflection .sim-reflection-body { font-size: 1.06rem; }
 }
 
@@ -1850,4 +1852,10 @@ body.quiz-modal-open { overflow: hidden; }
   .content           { padding: 2rem 1rem; }
   .home-intro        { padding: 0.5rem 1rem; }
   .jump              { border-radius: 12px; }
+}
+
+/* Visually hidden but available to screen readers */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
