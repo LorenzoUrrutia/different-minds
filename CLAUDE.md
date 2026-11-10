@@ -52,7 +52,7 @@ Accessibility is the product, not an extra. Every decision should make the site 
 - The simulations are research-based. Don't change simulation behavior (content, intensity levels, distraction types, timing, how they look or feel), reflection text, or the book passages without the owner's approval. If a fix would change the standard version, stop and ask first.
 - The difficulty is the point. Don't remove the distractions, scrambled text, timers or interruptions. Add safety *around* the simulation instead.
 - Every simulation must:
-  - show a short warning before it starts, saying what it will do (nothing moves or plays until the student presses Start);
+  - show a short warning before it starts, saying what it will do (nothing moves or plays until the visitor presses Start);
   - be pausable and exitable at any time, including with the keyboard (Esc opens a pause menu with Resume / Restart / Exit);
   - never flash more than 3 times per second (seizure safety);
   - respect reduced-motion settings by offering a calmer version (pre-selected when the device asks for reduced motion);
@@ -71,6 +71,6 @@ At the start of any session where the owner hasn't scheduled these yet, remind t
 - Voices section.
 - Decide about the book passages.
 
-## Student data
-- Users may be minors. Collect only the data the app actually needs.
+## Visitor data
+- Visitors may be minors. Collect only the data the app actually needs.
 - Never log or expose personal info, and keep learning-disability details private by default.
