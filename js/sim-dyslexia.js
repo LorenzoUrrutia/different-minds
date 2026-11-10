@@ -163,8 +163,18 @@ function applyLetterSubstitutions() {
   });
 }
 
+let lastCalmJitter = 0;
+
 function applyJitterEffect() {
   if (!hasStarted || paused) return;
+
+  // Calmer version (chosen on the warning card, see js/sim-safety.js):
+  // the same wobble, but updated far less often. The standard version is unchanged.
+  if (window.SimSafety && window.SimSafety.calm) {
+    const now = performance.now();
+    if (now - lastCalmJitter < 700) return;
+    lastCalmJitter = now;
+  }
   
   const mag = intensityToMag(intensity);
   const effectiveMag = mag;

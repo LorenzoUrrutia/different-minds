@@ -11,6 +11,7 @@
 
   <main class="content sim-fullscreen">
     <h1 id="simTitle" class="sr-only">ADHD Simulation</h1>
+    <p id="simDescription" class="sr-only">In this simulation you answer long word problems in a classroom. While you work, classroom background noise plays, notification pop-ups appear in the top corner, the screen gives a small shake, and full-screen interruptions appear that you have to dismiss before you can keep going. It shows how hard it can be to hold your attention on one task.</p>
     <div class="sim-stage">
       <div id="task-container">
         <div class="task-content">        
@@ -28,11 +29,11 @@
   <div id="toastLayer" class="toast-layer" aria-live="polite"></div>
 
   <!-- Interruption modal overlay -->
-  <div id="interruptOverlay" class="interrupt-overlay hidden">
+  <div id="interruptOverlay" class="interrupt-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="interruptTitle" aria-describedby="interruptText">
     <div class="interrupt-card">
-      <h2>Quick interruption</h2>
+      <h2 id="interruptTitle">Quick interruption</h2>
       <p id="interruptText">...</p>
-      <button id="dismissInterruptBtn" class="btn">Dismiss</button>
+      <button id="dismissInterruptBtn" class="btn" type="button">Dismiss</button>
     </div>
   </div>
 
@@ -40,6 +41,7 @@
     <div class="controls">
       <button id="pauseBtn" class="btn">Pause</button>
       <button id="resetBtn" class="btn">Reset</button>
+      <button id="muteBtn" class="btn" type="button">Mute</button>
 
       <label class="label-inline">
         Intensity
@@ -67,11 +69,43 @@
   </audio>
 
   <script src="js/sim-adhd.js"></script>
+  <script src="js/sim-safety.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof setup === 'function') {
-        setup();
-      }
+      const audio = document.getElementById('adhdAmbientAudio');
+      const muteBtn = document.getElementById('muteBtn');
+      muteBtn.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        muteBtn.textContent = audio.muted ? 'Unmute' : 'Mute';
+      });
+
+      // Treat the interruption as a real dialog: move focus in, then back out.
+      const overlay = document.getElementById('interruptOverlay');
+      new MutationObserver(() => {
+        if (overlay.classList.contains('hidden')) {
+          SimSafety.closeModal(overlay);
+        } else {
+          SimSafety.openModal(overlay, document.getElementById('dismissInterruptBtn'));
+        }
+      }).observe(overlay, { attributes: true, attributeFilter: ['class'] });
+
+      SimSafety.init({
+        name: 'ADHD',
+        warningPoints: [
+          '<strong>Play classroom background sound.</strong> You can turn it off with the Mute button.',
+          'Show notification pop-ups and give the screen a small shake.',
+          'Interrupt you with messages you have to dismiss while you answer questions.',
+        ],
+        start: () => setup(),
+        pause: () => { if (!paused) handlePause(); },
+        resume: () => { if (paused) handlePause(); },
+        isPaused: () => paused,
+        onEscape: () => {
+          if (!isInterruptVisible()) return false;
+          document.getElementById('dismissInterruptBtn').click();
+          return true;
+        },
+      });
     });
   </script>
   <script src="js/site.js"></script>

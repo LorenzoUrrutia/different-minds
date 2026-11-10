@@ -27,6 +27,18 @@ let intensityLabelEl;
 let symbolRoundIndex = 1;
 let quantityRoundIndex = 1;
 
+// Seizure-safety cap: the operator may swap at most 3 times per second
+// (WCAG 2.3.1). In the calmer version (js/sim-safety.js) at most 2 per second.
+const MIN_SWAP_GAP_MS = 340;
+const CALM_MIN_SWAP_GAP_MS = 500;
+// Calmer version: the same effects, updated less often.
+const CALM_MIN_TICK_MS = 700;
+let lastSwapAt = -Infinity;
+
+function isCalm() {
+  return !!(window.SimSafety && window.SimSafety.calm);
+}
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -453,7 +465,10 @@ function applyDistortionEffects() {
   if (taskName === 'symbol') {
     const operatorEl = document.getElementById('operatorEl');
 
-    if (operatorEl && Math.random() < chance) {
+    const now = performance.now();
+    const minGap = isCalm() ? CALM_MIN_SWAP_GAP_MS : MIN_SWAP_GAP_MS;
+    if (operatorEl && now - lastSwapAt >= minGap && Math.random() < chance) {
+      lastSwapAt = now;
       const original = operatorEl.dataset.original || '+';
       const alternatives = ['+', '-', '×'].filter((symbol) => symbol !== original);
       operatorEl.textContent = alternatives[Math.floor(Math.random() * alternatives.length)];
@@ -486,7 +501,8 @@ function restartAnimationLoop() {
     clearInterval(animationTimerId);
     animationTimerId = null;
   }
-  const tickMs = (intensityMap[intensity] || intensityMap.mild).tickMs;
+  const baseTickMs = (intensityMap[intensity] || intensityMap.mild).tickMs;
+  const tickMs = isCalm() ? Math.max(CALM_MIN_TICK_MS, baseTickMs) : baseTickMs;
   animationTimerId = setInterval(applyDistortionEffects, tickMs);
 }
 
@@ -514,7 +530,8 @@ function setupControls() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Called by the page once the student presses Start on the warning card.
+function setup() {
   simTaskAreaEl = document.getElementById('simTaskArea');
   reflectionEl = document.getElementById('reflectionCard');
   controlBarEl = document.getElementById('dyscalcControlBar');
@@ -530,4 +547,4 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTask();
   restartAnimationLoop();
   updatePauseUI();
-});
+}

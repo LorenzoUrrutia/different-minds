@@ -11,6 +11,7 @@
 
   <main class="content sim-fullscreen">
     <h1 id="simTitle" class="sr-only">Dyslexia Simulation</h1>
+    <p id="simDescription" class="sr-only">In this simulation you read a short passage from a book. The letters keep wobbling a little in place, which makes it hard to keep your place in a line. On the Strong setting, some letters are also swapped with their mirror images, b with d and p with q. You can choose the book and the intensity, and press Done Reading when you finish.</p>
     <div class="sim-stage">
       <div id="canvas-container" class="sketch">
         <div class="paper-scroll">
@@ -23,6 +24,7 @@
 
   <div id="simHud" class="sim-hud" role="group" aria-label="Simulation controls">
     <div class="controls">
+      <button id="pauseBtn" class="btn" type="button">Pause</button>
       <button id="doneReadingBtn" class="btn">Done Reading</button>
 
       <label class="label-inline">
@@ -55,11 +57,20 @@
   <a class="sim-back" href="simulations.html">Back</a>
 
   <script src="js/sim-dyslexia.js"></script>
+  <script src="js/sim-safety.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof setup === 'function') {
-        setup();
-      }
+      SimSafety.init({
+        name: 'Dyslexia',
+        warningPoints: [
+          'Make the letters wobble and shift a little while you read.',
+          'On the Strong setting, swap some letters (b and d, p and q).',
+        ],
+        start: () => setup(),
+        pause: () => { setPaused(true); updateControlsUI(); },
+        resume: () => { setPaused(false); updateControlsUI(); },
+        isPaused: () => paused,
+      });
     });
   </script>
   <script src="js/site.js"></script>

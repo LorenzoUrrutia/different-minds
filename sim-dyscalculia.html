@@ -9,6 +9,7 @@
 <body class="dark-site sim-no-scroll">
   <main class="content sim-page-content">
     <h1 id="simTitle" class="sr-only">Dyscalculia Simulation</h1>
+    <p id="simDescription" class="sr-only">In this simulation you solve short math problems written in Roman numerals. The math symbol in each problem sometimes changes to a different symbol for a moment, and groups of dots drift and spread apart while you count them. It shows how numbers and symbols can feel unstable. There are two tasks with three rounds each.</p>
     <section class="section dyscalc-sim-card" aria-labelledby="simTitle">
 
       <div id="simTaskArea" class="dyscalc-task-area" aria-live="polite"></div>
@@ -39,6 +40,23 @@
   </section>
 
   <script src="js/sim-dyscalculia.js"></script>
+  <script src="js/sim-safety.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      SimSafety.init({
+        name: 'Dyscalculia',
+        warningPoints: [
+          'Show math problems written in Roman numerals.',
+          'Make the math symbol briefly change to a different one (never more than 3 times a second).',
+          'Make groups of dots drift and spread apart while you count them.',
+        ],
+        start: () => setup(),
+        pause: () => setPaused(true),
+        resume: () => setPaused(false),
+        isPaused: () => paused,
+      });
+    });
+  </script>
   <script src="js/site.js"></script>
 </body>
 </html>
