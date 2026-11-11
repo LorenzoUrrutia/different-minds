@@ -47,6 +47,7 @@ Accessibility is the product, not an extra. Every decision should make the site 
 - Math and numbers: offer a visual or step-by-step version, not just raw numbers.
 - Respect the user's settings: reduced motion, text size, and zoom up to 200% without breaking the layout.
 - Run the `accessibility-review` skill after building or changing any UI.
+- Run the `design-review` skill after building or changing any UI as well.
 
 ## Simulations (`sim-*.html`) are intentionally difficult
 - The simulations are research-based. Don't change simulation behavior (content, intensity levels, distraction types, timing, how they look or feel), reflection text, or the book passages without the owner's approval. If a fix would change the standard version, stop and ask first.
